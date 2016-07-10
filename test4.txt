@@ -1,0 +1,467 @@
+hello中文一个字两个字节,我是中国人
+遗传算法表是一致的。
+是近几年发展起来的一种崭新的全局优化算法
+。
+1962年霍兰德(Holland)教授首次提出了GA算法的思想，
+它借用了仿真生物遗传学和自然选择机理，通过自然选择、遗传、变异等作用机制，
+实现各个个体的适应性的提高。
+从某种程度上说遗传算法是对生物进化过程进行的数学方式仿真。
+这一点体现了自然界中"物竞天择、适者生存"进化过程。
+与自然界相似，遗传算法对求解问题的本身一无所知，
+它所需要的仅是对算法所产生的每个染色体进行评价,
+把问题的解表示成染色体，并基于适应值来选择染色体，
+使适应性好的染色体有更多的繁殖机会。在算法中也即是以二进制编码的串。
+并且，在执行遗传算法之前，
+给出一群染色体，也即是假设解。然后，把这些假设解置于问题的“环境”中，也即一个适应度函数中来评价。
+并按适者生存的原则，从中选择出较适应环境的染色体进行复制, 淘汰低适应度的个体，再通过交叉
+，变异过程产生更适应环境的新一代染色体群。对这个新种群进行下一轮进化，至到最适合环境的值。
+
+遗传算法已用于求解带有应用前景的一些问题，
+例如遗传程序设计、函数优化、排序问题、人工神经网络、分类系统、计算机图像处理和机器人运动规划等。
+术语说明
+由于遗传算法是由进化论和遗传学机理而产生的搜索算法，所以在这个算法中会用到很多生物遗传学知识，
+下面是我们将会用来的一些术语说明：
+一、染色体(Chronmosome)
+染色体又可以叫做基因型个体(individuals),一定数量的个体组成了群体(population),群体中个体的数量叫做群体大小。
+二、基因(Gene)
+基因是串中的元素，基因用于表示个体的特征。例如有一个串S＝1011，则其中的1，0，1，1这4个元素分别称为基因。
+它们的值称为等位基因(Alletes)。
+三、基因地点(Locus)
+基因地点在算法中表示一个基因在串中的位置称为基因位置(Gene Position)，有时也简称基因位。
+基因位置由串的左向右计算，例如在串 S＝1101 中，0的基因位置是3。
+四、基因特征值(Gene Feature)
+在用串表示整数时，基因的特征值与二进制数的权一致；例如在串 S=1011 中，基因位置3中的1，
+它的基因特征值为2；基因位置1中的1，它的基因特征值为8。
+五、适应度(Fitness)
+各个个体对环境的适应程度叫做适应度(fitness)。为了体现染色体的适应能力，
+引入了对问题中的每一个染色体都能进行度量的函数，叫适应度函数. 这个函数是计算个体在群体中被使用的概率。
+操作算法
+霍兰德(Holland)教授最初提出的算法也叫简单遗传算法，简单遗传算法的遗传操作主要有三种：
+选择(selection)、交叉(crossover)、变异(mutation)这也是遗传算法中最常用的三种算法：
+1．选择(selection)
+选择操作也叫复制操作，从群体中按个体的适应度函数值选择出较适应环境的个体。
+一般地说，选择将使适应度高的个体繁殖下一代的数目较多，而适应度较小的个体，
+繁殖下一代的数目较少,甚至被淘汰。最通常的实现方法是轮盘赌(roulette wheel)模型。令Σfi表示群体的适应度值之总和，
+fi表示种群中第i个染色体的适应度值，它被选择的概率正好为其适应度值所占份额fi／Σfi。
+如下图表中的数据适应值总和Σfi=6650,适应度为2200变选择的可能为fi／Σfi=2200/6650=0.394.
+
+图1. 轮盘赌模型
+  
+Fitness 值：	2200	1800	1200	950	400	100
+选择概率：	3331	0.271	0.18	0.143	0.06	0.015
+　 
+2．交叉(Crossover)
+交叉算子将被选中的两个个体的基因链按一定概率pc进行交叉，从而生成两个新的个体，交叉位置pc是随机的。
+其中Pc是一个系统参数。根据问题的不同，交叉又为了单点交叉算子（Single Point Crossover）、
+双点交叉算子（Two Point Crossover）、均匀交叉算子 (Uniform Crossover)，在此我们只讨论单点交叉的情况。
+单点交叉操作的简单方式是将被选择出的两个个体S1和S2作为父母个体，将两者的部分基因码值进行交换。
+假设如下两个8位的个体：
+S1 1000  1111 S2 1110  1100
+
+产生一个在1到7之间的随机数c，假如现在产生的是2，将S1和S2的低二位交换：S1的高六位与S2的低六位组成数串10001100，
+这就是S1和S2 的一个后代P1个体；S2的高六位与S1的低二位组成数串11101111，这就是S1和S2的一个后代P2个体。
+其交换过程如下图所示：
+Crossover	11110000	Crossover	11110000
+S1	1000 1111	S2	1110 1100
+P1	1000 1100	P2	1110 1111
+3．变异(Mutation)
+这是在选中的个体中，将新个体的基因链的各位按概率pm进行异向转化，最简单方式是改变串上某个位置数值。
+对二进制编码来说将0与1互换：0变异为1，1变异为0。
+如下8位二进制编码：
+1 1 1 0 1 1 0 0
+
+随机产生一个1至8之间的数i，假如现在k=6，对从右往左的第6位进行变异操作，将原来的1变为0，得到如下串：
+1 1 0 0 1 1 0 0
+
+整个交叉变异过程如下图：
+
+图2. 交叉变异过程
+ 
+   
+4．精英主义 （Elitism）
+仅仅从产生的子代中选择基因去构造新的种群可能会丢失掉上一代种群中的很多信息。也就是说当利用交叉和变异产生新的一代时，
+我们有很大的可能把在某个中间步骤中得到的最优解丢失。在此我们使用精英主义（Elitism）方法，在每一次产生新的一代时，
+我们首先把当前最优解原封不动的复制到新的一代中，其他步骤不变。这样任何时刻产生的一个最优解都可以存活到遗传算法结束。
+上述各种算子的实现是多种多样的，而且许多新的算子正在不断地提出，以改进GA某些性能。比如选择算法还有分级均衡选择等等。
+遗传算法的所需参数
+说简单点遗传算法就是遍历搜索空间或连接池，从中找出最优的解。搜索空间中全部都是个体，而群体为搜索空间的一个子集。
+并不是所有被选择了的染色体都要进行交叉操作和变异操作，而是以一定的概率进行，
+一般在程序设计中交叉发生的概率要比变异发生的概率选取得大若干个数量级。
+大部分遗传算法的步骤都很类似，常使用如下参数：
+Fitness函数：见上文介绍。
+Fitnessthreshold（适应度阀值）：适合度中的设定的阀值，当最优个体的适应度达到给定的阀值，
+或者最优个体的适应度和群体适应度不再上升时(变化率为零)，则算法的迭代过程收敛、算法结束。
+否则，用经过选择、交叉、变异所得到的新一代群体取代上一代群体，并返回到选择操作处继续循环执行。
+P：种群的染色体总数叫种群规模，它对算法的效率有明显的影响，其长度等于它包含的个体数量。
+太小时难以求出最优解，太大则增长收敛时间导致程序运行时间长。对不同的问题可能有各自适合的种群规模，
+通常种群规模为 30 至 160。
+pc：在循环中进行交叉操作所用到的概率。交叉概率（Pc）一般取0.6至0.95之间的值，Pc太小时难以向前搜索，
+太大则容易破坏高适应值的结构。
+Pm：变异概率，从个体群中产生变异的概率，变异概率一般取0.01至0.03之间的值变异概率Pm太小时难以产生新的基因结构
+，太大使遗传算法成了单纯的随机搜索。
+另一个系统参数是个体的长度，有定长和变长两种。它对算法的性能也有影响。
+由于GA是一个概率过程，所以每次迭代的情况是不一样的,系统参数不同，迭代情况也不同。
+遗传步骤
+了解了上面的基本参数，下面我们来看看遗传算法的基本步骤。
+基本过程为： 
+1.	对待解决问题进行编码,我们将问题结构变换为位串形式编码表示的过程叫编码；
+而相反将位串形式编码表示变换为原问题结构的过程叫译码。 
+2.	随机初始化群体P(0)：=(p1, p2, … pn)； 
+3.	计算群体上每个个体的适应度值(Fitness) 
+4.	评估适应度,对当前群体P(t)中每个个体Pi计算其适应度F(Pi)，适应度表示了该个体的性能好坏 
+5.	按由个体适应度值所决定的某个规则应用选择算子产生中间代Pr(t) 
+6.	依照Pc选择个体进行交叉操作 
+7.	仿照Pm对繁殖个体进行变异操作 
+8.	没有满足某种停止条件，则转第3步，否则进入9 
+9.	输出种群中适应度值最优的个体 
+程序的停止条件最简单的有如下二种：完成了预先给定的进化代数则停止；
+种群中的最优个体在连续若干代没有改进或平均适应度在连续若干代基本没有改进时停止。
+根据遗传算法思想可以画出如右图所示的简单遗传算法框图： 
+
+图3. 简单遗传算法框图
+  
+下面伪代码简单说明了遗传算法操作过程：
+choose an intial population
+For each h in population,compute Fitness(h)
+While(max Fitness(h) < Fitnessthreshold)
+do selection
+    do crossover
+do mutation  
+ update population
+For each h in population,compute Fitness(h)
+Return best Fitness
+
+Robocode 说明
+能有效实现遗传算法的应用例子有很多，像西洋双陆棋、国际名模等等都是遗传程序设计学习的工具，
+但是 Robocode 有着其他几个无可比拟的优势：
+1.	它是基于面向对象语言 Java 开发，而遗传算法本身的思想也是存在继承等面向对象概念； 
+2.	Robocode 是一种基于游戏与编程语言之间的平台，有一个充满竞技与乐趣的坦克战斗平台，
+你能很快的通过与其他坦克机器比赛而测试自己的遗传算法； 
+3.	Robocode 社群有 4000 个左右各种策略的例子机器人可供你选择，这些机器人足以让我们模拟真实的遗传环境。
+而且很多代码可直接开放源代码供我们借鉴 ； 
+4.	Robocode 是一个开源软件，你可直接上Robocode控制器上加入自己的遗传特点，而加快遗传过程的收敛时间； 
+5.	Robocoe 是一个很容易使用的机器人战斗仿真器，您在此平台上创建自己的坦克机器人，
+并与其它开发者开发的机器人竞技。以得分排名的方式判定优胜者。
+每个 Robocode 参加者都要利用 Java 语言元素创建他或她的机器人，
+这样就使从初学者到高级黑客的广大开发者都可以参与这一娱乐活动。
+如果您对Robocode不是很了解，请参考 developerWorks 网站 Java 技术专区文章：“重锤痛击 Robocode”； 
+在 Robocode 中其实有很多种遗传算法方法来实现进化机器人，从全世界的 Robocode 流派中也发展几种比较成熟的方法，
+比如预设策略遗传、自开发解释语言遗传、遗传移动我们就这几种方法分别加以介绍。由于遗传算法操作过程都类似，
+所以前面二部分都是一些方法的介绍和部分例子讲解，后面部分会给出使用了遗传算法的移动机器人人例子。
+在附录中，也提供了机器人仓库中有关遗传算法机器人的下载，大家可参考。
+
+ 
+  
+	
+
+预设策略进化机器人
+Robocode 坦克机器人所有行为都离不开如移动、射击、扫描等基本操作。
+所以在此把这些基本操作所用到的策略分别进化如下编码：移动策略move-strategy (MS), 
+子弹能量bullet-power-strategy (BPS), 雷达扫描radar-strategy (RS), 和瞄准选择策略target- strategy (TS)。
+由于Robocode爱好者社群的发展，每一种基本操作都发展了很多比较成熟的策略，
+所有在此我们直接在下面预先定义的这些策略如下表：
+MS	BPS	RS	TS
+random	distance-based	always-turn	HeadOn
+Linear	light-fast	target-focus	Linear
+circular	Powerful-slow	target-scope-focus	Circular
+Perpendicular	Medium	 	nearest robot
+arbitary	hit-rate based	 	Log
+anti gravity	 	 	Statistic
+Stop	 	 	Angular
+Bullet avoid	 	 	wave
+wall avoid	 	 	 
+track	 	 	 
+Oscillators	 	 	 
+下面是基本移动策略的说明：
+?	Random：随机移动主要用来混乱敌人的预测，其最大的一个缺点是有可能撞击到其他机器人 
+?	Linear：直线移动,机器人做单一的直线行走 
+?	circular：圆周移动，这种移动是以某一点为圆心，不停的绕圈 
+?	Perpendicular：正对敌人移动，这是很多人采用的一种移动方式，这在敌人右边， 以随时调整与敌人的相对角 
+?	Arbitrary：任意移动 
+?	AntiGravity：假设场地有很多力点的反重力移动，本方法是模拟在重力场作用下，物体总是远离重力势高的点，
+滑向重力势低的点，开始战场是一个平面然后生成一些势点重力势大的势点的作用就像是一个山(起排斥作用），
+其衰减系数与山的坡度对应。重力势小的势点的作用就像是一个低谷（起吸引作用），其衰减系数与谷的坡度对应。
+这样使本来的平面变得不平了，从来物体沿着最陡的方向向下滑动 
+?	Track：跟踪敌人，敌人移动到哪，机器人也移动到哪，但是总与敌人保持一定最佳躲避子弹距离和角度 
+?	Oscillators：重复做一振荡移动 
+?	Bullet avoid：每当雷达觉察到敌人时有所动作。机器人保持与敌人成30度倾向角。
+自身成 90 度角静止并逐渐接近目标。如果机器人觉察到能量下降介于 0.1 和 3.0 之间（火力范围），
+那么机器人就立即切换方向，向左或向右移动。 
+?	wall avoid：这是一种使自己的机器人不会被困在角落里或者不会撞墙的移动方式 
+瞄准策略说明如下：
+?	Headon：正对瞄准 
+?	Linear：直线瞄准 
+?	circular：圆周瞄准 
+?	nearest robot：接近机器人瞄准 
+?	Log：保存每次开火记录 
+?	Statistic：统计学瞄准，分析所有打中及未打中的次数，以其中找出最高打中敌人的概率为准则 
+?	Angular：找到最佳角度瞄准 
+?	Wave：波形瞄准，子弹以波的方式进行探测 
+Robocode 行为事件
+坦克的主要都定义在一个主循环中，我们在程序中定义为上面四个策略定义四种战略如Move,Radar,Power,Target
+，当某一事件发生，基于这个事件而定的行为就会触发。而每个战略中都有不同的行为处理方式。
+这些行为通过遗传算法触发，遗传算法将调用这些基本动作并搜索这些策略的最佳组合。
+基于这些基本动作将有4224 (=4*11*4*3*8)种可能发生。在Robocode AdvancedRobot 类下有如下的移动函数：
+?	setAhead和ahead：让机器人向前移动一定距离. 
+?	setBack和back：让机器人向后移动一定距离 
+?	setMaxTurnRate：设置机器人最大的旋转速度 
+?	setMaxVelocity：设置机器人最大的运动速度 
+?	setStop和stop：停止移动或暂停机器人，并记住停止的位置 
+?	setResume和resume：重新开始移动停止的机器人 
+?	setTurnLeft和turnLeft：向左旋转机器人 
+?	setTurnRight和turnRight：向右旋转机器人 
+下面是 doMove 移动方法中使用部分程序代码：
+Random：
+switch(Math.random()*2) {
+ case 0： setTurnRight(Math.random()*90);
+break;
+case 1： setTurnLeft(Math.random()*90);
+ break; }
+ execute();
+
+Linear：
+ahead(200);
+setBack(200);
+
+Circular：
+setTurnRight(1000);
+setMaxVelocity(4);
+ahead(1000);
+
+anti gravity：
+ double forceX = 0;
+  double forceY = 0;
+  for (int i=0; i   
+
+这里我们用遗传算法来控制机器人移动位置。这些策略是基于下面几点：机器人人自己的位置、速度和方位;
+对手的位置（x,y坐标）、速度、方位以及相对角;所有机器人和子弹位置，方位及速度;场地大小等参数。
+当上面的信息在下一回移动中使用时，出输出一对坐标值，根据这对坐标在Robocode就能得到距离和角度。
+要想让移动实现遗传必须要让它实现在线学习：所以我们的代码必须做下面几件事：要有一个函数收集适应度值，在Robocode运行过程中要运用到遗传操作，遗传后代要在Robocode运行中产生，而不是事后由手写入代码。
+遗传操作
+本例中遗传算法为实现移动用到两个类GA和MovePattern。此处的GA比较简单主要完成数据和群体的定义，
+以及这些定义的读写文件操作。
+基中包括如下参数：群体大小、交叉概率、变异概率、精英概率（既告诉从当前群体到下一代中有多少移动不需要改变）、
+方程式中使用的加权系数大小，它通过一个主循环完成MovePattern的封装。MovePattern类中实现交叉、
+变异方法等方法，完成移动模式操作。而所有的输出保存在一个vector函数当中。Vector函数拥有一对实数数组，
+一个用于计算x坐标，另一个用于计算y坐标。通过对x,y坐标的计算，从而得到距离、角度等值，
+并产生相就在移动策略。如下，MovePattern包含三个参数，grad表示vector函数排列顺序，
+input即表示算法给出的输入编号，rang是加权的范围。
+public class MovePatteren implements Comparable {
+ private int grad, input;
+ private double range;
+ protected double fitness=0;
+ protected double[] weightsX, weightsY;    
+… }
+
+交叉操作：每一个交叉操作执行如下步骤，先在交叉操作中产生一个特征码。这个特征码是个0到1之间的变量数组。
+有关交叉的基本原理可参考上面部分。最后通过遍历vector函数，把相应的加权值进行交叉操作。
+protected MovePatteren crossOver(MovePatteren mate, boolean[] maskx, boolean[] masky) {
+  double[] wx= new double[weightsX.length];
+  double[] wy= new double[weightsX.length];
+  for(int mask=0; mask <="" pre="" mask++)="" for(int="" g="0;" g  
+
+这里的变异操作比较简单。把加权范围内的随机数值去代替0到数组长之间的随机数并保存到移动模式中。
+则完成整个数组的变异过程：
+protected void mutate() {
+weightsX[(int)(Math.random()*weightsX.length)]=Math.random()*range*2-range;
+weightsY[(int)(Math.random()*weightsX.length)]=Math.random()*range*2-range;
+}
+
+从上面的例子我们知道了遗传算法的大概实现，但并没有告诉我们这些组件是如何一起工作的。
+当Robocode开始时，如果文件中没有数据，所以系统会依照输入的策略随机生成一个移动模式，
+如果文件中有数据，则加载这些数据。每一个移动模式在开始都会给出了一个适应度值。当所有的移动模式都接收到适应度值，
+并完成各自的编号后，下面的操作将开始执行：
+1.	对所有的移动模式依据它们的适应度值进行分级处理 
+2.	执行精英操作 
+3.	执行交叉操作 
+4.	应用变异操作 
+5.	保存加权 
+6.	算法重新开始 
+适应度值在进行运算过程中由机器人程序不断调整，以找到最优适应度。
+限于篇副其他的一些策略本文不与详细说明，
+上面所有提到的策略和行为程序都可在网上或IBM的开发杂志上找到成熟的讲解和例子机器人。
+有兴趣的朋友可以把这些策略都加入到自己的遗传算法中来。我们取群体大小为50，
+选择概率为0.7，交叉概率为0.6，变异概率为0.3，与Robocode部分例子机器人测试，
+经过150代后你会发现系统产生了很多有趣的策略。比如撞击策略，这些策略都不在我们定义的策略之中。
+
+ 
+  
+	
+
+中间解释程序进化机器人
+遗传算法可被看做任意基因组字符串。但是你必须决定这些字符所代表的意义，也就是说如何解释每一个基因组。
+最简单的方法是把每一个基因组视为java代码，编译并运行它们。但是这些程序编译都很困难，所以也就有可能不能工作。
+Jacob Eisenstein设计了一种机器翻译语言TableRex来解决这个问题。
+在java中，TableRex被用于进化和解释动行时的Robocode 机器人。
+通过测试，只要我把TableRex解释程序作为文件放入Robocode控制器目录中，
+这些控制器就会读取文件并开始战斗。TableRex是一些最适合遗传算法的二进制编程。只要符合TableRex程序文法，
+每个程序都能被解释。
+编码
+下表中显示了TableRex编码结构，它由一个行动作函数，二个输入和一个输出组成。如行6的值 ，
+这是个布尔型的表达式“值 line4 小于 90”，这个结果会在最后一行输出布尔为1的值。
+Function	Input 1	Input 2	Output
+1. Random	ignore	ignore	0,87
+2. Divide	Const_1	Const_2	0,5
+3. Greater Than	Line 1	Line 2	1
+4. Normalize Angle	Enemy bearing	ignore	-50
+5. Absolute Value	Line 4	ignore	50
+6. Less Than	Line 4	Const_90	1
+7. And	Line 6	Line 3	1
+8. Multiply	Const_10	Const_10	100
+9. Less Than	Enemy distance	Line 8	0
+10. And	Line 9	Line 7	0
+11. Multiply	Line 10	Line 4	0
+12 Output	Turn gun left	Line 11	0
+
+输入的函数我们依照Robocode定义而定。如下表：
+velocity
+energy
+heading
+gunHeading
+gunHeat
+distance to west wall
+distance to north wall
+distance to east wall
+distance to south wall
+constant: 1
+constant: 2
+constant: 10
+constant: 90
+enemyVelocity
+enemyEnergy
+enemyHeading
+enemyBearing
+enemyDistance
+
+TableRex有三个设计标准：
+1.	它是一种解释程序，能更快的进化程序,基于TableRex设计的机器人能有效的读写遗传数据； 
+2.	拥有一个容易编码的固定基因组,使遗传中更容易交叉操作； 
+3.	只要给TableRex一个简单的输入，它就很容易通过操作命令输出要的命令序列。如上表的最后输出左转炮管； 
+而整个TableRex解释程序由三部分组成：
+?	SmallBrain：TableRex的实现部分,此部分直接写在例子机器人处，也即自己写的测试机器人； 
+?	BrainWorld：这是实现遗传算法的主方法，直接写入Robocode控制器当中，在Robocode运行当中运行； 
+?	GeneticAlgorithm：这是遗传算法的定义部分，里面直接定义了所要用到的遗传操作函数； 
+下面我们来分析一个机器人如何通过TableRex达到遗传。
+GeneticAlgorithm：
+主要是声明选择、交叉、变异的方法。
+GeneticAlgorithm是一个静态类，其中定义了遗传所要的基本参数，如下：
+public abstract class GeneticAlgorithm {
+    public int population_size;  // 群体长度
+    public int genome_size;    //基因个体长度
+    public GFPair population[];  //产生的群体
+    public int best_index;  
+    public double best_fitness = Double.MIN_VALUE;  //最优适应度
+    public double mutation = 0.03;  //变异概率
+public double crossover = 0.9;   //交叉概率
+public double copy = 0.1;
+public int tourney_size = 3;
+…
+
+其中变异概率取0.03, 交叉概率取0.9，最优适应度为实型的最小。
+此部分是从保存的文件中读取各个基本参数遗传初始化群体。
+依照适应度值选择群体中个体：
+public String tourneySelect (){
+ double best_fit = -1;
+ int best_guy = -1;
+ for (int i = 0; i < tourney_size; i++){
+     int cur_guy = (int) (Math.random() * population.length); 
+     if (population[cur_guy].fitness > best_fit){
+  best_fit = population[cur_guy].fitness;
+  best_guy = cur_guy;
+     }
+ }
+ …
+ return population[best_guy].genome;
+}
+
+交叉操作：通过从字符串中取子串的方法达到交叉操作：
+public static String crossover (String g1, String g2){
+ int num_points = (int) Math.round (Math.random() * 4f);
+ int point = (int) (g1.length() * Math.random());
+ return g1.substring (0, point) + g2.substring (point);
+    }
+
+变异操作：此部分先把基因转换为字符串流，通过setCharAt函数从指定的位置取反字符而达到变异：
+public static String mutate (String genome, double p_mutation){
+StringBuffer genome_b = new StringBuffer (genome);
+   if (genome_b.charAt (point) == '1'){
+      genome_b.setCharAt(point, '0');
+  }
+  else {
+      genome_b.setCharAt (point, '1');
+  …
+ return new String (genome_b);
+    }
+
+BrainWorld：
+BrainWorld直接嵌入到Robocode控制器中，通过实现RobocodeListener接口来完成遗传的实例化。
+其最重要的有两个方法，计算最优适应度和产生遗传后代。
+1. 实例化 GeneticAlgorithm：
+genome_size = num_events * num_boxes * (input_bits * 2 + func_bits);
+int population_size = Integer.parseInt (in.readLine());
+ga = new GeneticAlgorithm (population_size, genome_size); 
+
+2. 通过文件读取操作从遗传保存文件中读取参数到遗传类中，文件格式如下所示：
+       Robocode Location
+       Storage_directory
+       population_size
+       elitism
+       crossover
+       copy
+       base_mutation
+       ...
+
+3. 计算最优适应度：
+protected void evaluateAll (){
+ ga.best_fitness = Double.MIN_VALUE;
+ ga.worst_fitness = Double.MAX_VALUE;
+   …
+ for (int i = 0; i < ga.population_size; i++){
+     ga.population[i].fitness = 0;
+     for (int j = 0; j < rspecs.length; j++){
+  ga.population[i].fitness += 
+      Math.pow (2.0, (all_results[i][j] - all_means[j]) / all_stdevs[j]);  
+     }
+     ga.mean_fitness += ga.population[i].fitness;
+     if (ga.population[i].fitness > ga.best_fitness) {
+  ga.best_fitness = ga.population[i].fitness;
+  ga.best_index = i;
+     }
+    …
+ }
+ …
+    }
+
+通过三个循环遍历整个群体，对各个适应度进行比较后找出最优适应度。
+4. 产生遗传后代
+public void newGeneration (){
+…
+ String copy_pop[] = ga.copy (ga.population, ga.copy);
+ String cross_pop[] = ga.crossover (ga.population, ga.crossover);
+ copy_pop = ga.mutate (copy_pop, ga.mutation);
+ cross_pop = ga.mutate (cross_pop, ga.mutation);
+ for (int i = 0; i < copy_pop.length; i++){
+     ga.population[i+elite_pop.length].genome = copy_pop[i];
+ }
+ for (int i = 0; i < cross_pop.length; i++){
+     ga.population[i+elite_pop.length+copy_pop.length].genome = cross_pop[i];
+ }
+… 
+ current_generation++;
+ evaluateAll();
+    }
+
+通过复制(ga.copy)、交叉(ga.crossover)、变异(ga.mutate)操作，产生出遗传后代。
+SmallBrain：
+SmallBrain也即我们写的利用遗传算法的例子机器人，它开始读取遗传文件"genome.dat"，产生新的编码，
+当扫描到敌人时把所有相关的信息写入数组robot_data，再通过循环操作进化写入输入运算，
+最后遍历输入运算决定输出机器人的动作。
+1.编码：
+public void parseGenome (String genome){
+ functions = new int [num_boxes][num_events];
+ inputs1 = new int [num_boxes][num_events];
+ inputs2 = new int [num_boxes][num_events];
+ robot_data = new double [num_boxes + num_system_inputs][num_events];
+
+通过parseGenome方法，设置function,input1,input2等数组的参数，对要操作的机器人进行编码。
+这部分和最上面提来的TableRex编码

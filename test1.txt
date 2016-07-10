@@ -1,0 +1,41 @@
+hello中文一个字两个字节,我是中国人
+遗传算法表是一致的。
+public void parseGenome (String genome){
+ functions = new int [num_boxes][num_events];
+ inputs1 = new int [num_boxes][num_events];
+ inputs2 = new int [num_boxes][num_events];
+ robot_data = new double [num_boxes + num_system_inputs][num_events];
+通过parseGenome方法，设置function,input1,input2等数组的参数，
+对要操作的机器人进行编码。
+这部分和最上面提来的TableRex编码
+操作函数； 
+下面我们来分析一个机器人如何通过TableRex达到遗传。
+GeneticAlgorithm：
+主要是声明选择、交叉、变异的方法。
+GeneticAlgorithm是一个静态类，其中定义了遗传所要的基本参数，如下：
+public abstract class GeneticAlgorithm {
+    public int population_size;  // 群体长度
+    public int genome_size;    //基因个体长度
+    public GFPair population[];  //产生的群体
+    public int best_index;  
+    public double best_fitness = Double.MIN_VALUE;  //最优适应度
+    public double mutation = 0.03;  //变异概率
+public double crossover = 0.9;   //交叉概率
+Everyone is permitted to copy and distribute verbatim copies of this license
+Lucene Please join the Lucene-User mailing list by sending a message to:
+  java-user-subscribe@lucene.apache.org
+
+FILES
+
+lucene-core-XX.jar
+  The compiled lucene library.
+
+lucene-demos-XX.jar
+  The compiled simple example code.
+
+luceneweb.war
+  The compiled simple example Web Application.
+
+contrib/*
+  Contributed code w
+1962年霍兰德(Holland)教授首次提出了GA算法的思想
